@@ -1,0 +1,6 @@
+alt + 7			查看方法的结构
+ctrl + alt + v		自动生成方法的返回类型，类似eclipse中的ctrl + enter 
+ctrl + shift + v	调取最近的粘贴板
+ctrl + shift + v	查找文件
+ctrl + shift + r	查找内容，类似linux中grep 全局搜素某个字符串在项目中出现的地方
+alt + insert		快速插入代码：gettter setter
