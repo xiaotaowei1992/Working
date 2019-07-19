@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.bankCard.mapper.BankCardMapper">
+	<!-- Begin Base Config -->
+	<sql id="fields" ><!-- ALl Fields -->
+		id, card_no, is_active, add_time, update_time
+	</sql>
+
+	<sql id="values">
+		#{id},#{cardNo},#{isActive},#{addTime},#{updateTime}
+	</sql>
+
+	<sql id="foreachObj">
+		#{obj.id},#{obj.cardNo},#{obj.isActive},#{obj.addTime},#{obj.updateTime}
+	</sql>
+
+	<sql id="sets"><!-- Set Fields -->
+		<trim  suffixOverrides="," >
+			<if test="id != null">id = #{id},</if>
+			<if test="cardNo != null">card_no = #{cardNo},</if>
+			<if test="isActive != null">is_active = #{isActive},</if>
+			<if test="addTime != null">add_time = #{addTime},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+		</trim>
+	</sql>
+
+	<!-- SQL查询条件明确，禁止conditions(便于索引) -->
+	<sql id="conditions"><!-- Search Condition -->
+		<trim prefix="where" prefixOverrides="and |or">
+			<if test="id != null"> and id = #{id}</if>
+			<if test="cardNo != null"> and card_no = #{cardNo}</if>
+			<if test="isActive != null"> and is_active = #{isActive}</if>
+			<if test="addTime != null"> and add_time = #{addTime}</if>
+			<if test="updateTime != null"> and update_time = #{updateTime}</if>
+		</trim>
+	</sql>
+	<sql id="insertFields"><!-- Fields to insert -->
+		<trim  suffixOverrides="," >
+			<if test="id != null">id,</if>
+			<if test="cardNo != null">card_no,</if>
+			<if test="isActive != null">is_active,</if>
+			<if test="addTime != null">add_time,</if>
+			<if test="updateTime != null">update_time,</if>
+		</trim>
+	</sql>
+
+	<sql id="insertValues"><!-- Values to insert -->
+		<trim  suffixOverrides="," >
+			<if test="id != null">#{id},</if>
+			<if test="cardNo != null">#{cardNo},</if>
+			<if test="isActive != null">#{isActive},</if>
+			<if test="addTime != null">#{addTime},</if>
+			<if test="updateTime != null">#{updateTime},</if>
+		</trim>
+	</sql>
+
+	<!-- End Base Config -->
+
+	<!-- 新增 -->
+	<insert id="insert" parameterType="Object" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into bank_card(<include refid="insertFields"/>)
+		values(<include refid="insertValues"/>)
+	</insert>
+
+	<!-- 修改数据 -->
+	<update id="update" parameterType="Object">
+		update bank_card set
+		<include refid="sets"/>
+		where id = #{id}
+	</update>
+
+	<!--获取T对象 (查询条件明确，禁止conditions) -->
+	<select id="selectEntity" parameterType="Object" resultType="com.example.demo.dao.bankCard.model.BankCardEntity">
+		select id, card_no cardNo, is_active isActive from bank_card
+		<include refid="conditions"/>
+	</select>
+</mapper>

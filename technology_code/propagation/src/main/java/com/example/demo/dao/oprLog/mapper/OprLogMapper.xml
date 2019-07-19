@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.oprLog.mapper.OprLogMapper">
+<!-- Begin Base Config -->
+	<sql id="fields" ><!-- ALl Fields -->
+		id, opr, action, add_time, update_time
+	</sql>
+
+	<sql id="values">
+		#{id},#{opr},#{action},#{addTime},#{updateTime}
+	</sql>
+
+	<sql id="foreachObj">
+		#{obj.id},#{obj.opr},#{obj.action},#{obj.addTime},#{obj.updateTime}
+	</sql>
+
+	<sql id="sets"><!-- Set Fields -->
+		<trim  suffixOverrides="," >
+			<if test="id != null">id = #{id},</if>
+			<if test="opr != null">opr = #{opr},</if>
+			<if test="action != null">action = #{action},</if>
+			<if test="addTime != null">add_time = #{addTime},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+		</trim>
+	</sql>
+
+	<!-- SQL查询条件明确，禁止conditions(便于索引) -->
+	<sql id="conditions"><!-- Search Condition -->
+		<trim prefix="where" prefixOverrides="and |or">
+	        <if test="id != null"> and id = #{id}</if>
+			<if test="opr != null"> and opr = #{opr}</if>
+			<if test="action != null"> and action = #{action}</if>
+			<if test="addTime != null"> and add_time = #{addTime}</if>
+			<if test="updateTime != null"> and update_time = #{updateTime}</if>
+	    </trim>
+	</sql>
+	<sql id="insertFields"><!-- Fields to insert -->
+		<trim  suffixOverrides="," >
+			<if test="id != null">id,</if>
+			<if test="opr != null">opr,</if>
+			<if test="action != null">action,</if>
+			<if test="addTime != null">add_time,</if>
+			<if test="updateTime != null">update_time,</if>
+		</trim>
+	</sql>
+
+	<sql id="insertValues"><!-- Values to insert -->
+		<trim  suffixOverrides="," >
+			<if test="id != null">#{id},</if>
+			<if test="opr != null">#{opr},</if>
+			<if test="action != null">#{action},</if>
+			<if test="addTime != null">#{addTime},</if>
+			<if test="updateTime != null">#{updateTime},</if>
+		</trim>
+	</sql>
+
+<!-- End Base Config -->
+
+	<!-- 新增 -->
+	<insert id="insert" parameterType="Object" >
+		insert into opr_log(<include refid="insertFields"/>)
+		values(<include refid="insertValues"/>)
+	</insert>
+</mapper>
